@@ -1,0 +1,21 @@
+_id: req_wrk_c545c7b54efc4918b5101193d6a961a67d52000c
+type: Request
+parentId: wrk_c545c7b54efc4918b5101193d6a961a6
+modified: 1659451397077
+created: 1659451397077
+url: "{{ base_url }}/toys/status/{{ status }}"
+name: Метод получения игрушек по состоянию
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1659451397077
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

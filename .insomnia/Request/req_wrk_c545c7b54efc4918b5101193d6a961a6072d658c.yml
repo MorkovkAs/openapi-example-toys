@@ -1,0 +1,21 @@
+_id: req_wrk_c545c7b54efc4918b5101193d6a961a6072d658c
+type: Request
+parentId: wrk_c545c7b54efc4918b5101193d6a961a6
+modified: 1659451397094
+created: 1659451397094
+url: "{{ base_url }}/toys/{{ id }}"
+name: Метод получения игрушки по идентификатору
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1659451397094
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

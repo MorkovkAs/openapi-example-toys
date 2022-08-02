@@ -1,0 +1,21 @@
+_id: req_wrk_c545c7b54efc4918b5101193d6a961a67f25043a
+type: Request
+parentId: wrk_c545c7b54efc4918b5101193d6a961a6
+modified: 1659451397083
+created: 1659451397083
+url: "{{ base_url }}/toys/{{ id }}"
+name: Метод удаления игрушки по идентификатору
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1659451397083
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

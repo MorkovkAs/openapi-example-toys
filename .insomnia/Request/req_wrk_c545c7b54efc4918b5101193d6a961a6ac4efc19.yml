@@ -1,0 +1,32 @@
+_id: req_wrk_c545c7b54efc4918b5101193d6a961a6ac4efc19
+type: Request
+parentId: wrk_c545c7b54efc4918b5101193d6a961a6
+modified: 1659451397099
+created: 1659451397099
+url: "{{ base_url }}/toys"
+name: Метод добавления новой игрушки в каталог
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "toy_id": "42abcd2b-8b9c-4af9-88f7-0bc180cf74b4",
+      "name": "Train",
+      "status": "new",
+      "note": "Found on a street",
+      "created_at": "2022-07-01T15:00:00+01"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1659451397099
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

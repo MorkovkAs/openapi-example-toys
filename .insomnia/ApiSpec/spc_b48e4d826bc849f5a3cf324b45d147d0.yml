@@ -1,0 +1,242 @@
+_id: spc_b48e4d826bc849f5a3cf324b45d147d0
+type: ApiSpec
+parentId: wrk_c545c7b54efc4918b5101193d6a961a6
+modified: 1659451580138
+created: 1656265914508
+fileName: toys.yaml
+contents: >-
+  openapi: 3.0.0
+
+  info:
+    title: OpenAPI спецификация каталога детских игрушек
+    license:
+      name: Apache 2.0
+      url: https://www.apache.org/licenses/LICENSE-2.0.html
+    version: 0.0.1
+  servers:
+    - url: http://localhost:8080/api/v1/
+      description: Dev server  
+
+    
+  paths:
+    /toys:
+      get:
+        summary: Метод получения игрушек
+        description: Метод предназначен для получения списка всех игрушек, сохраненных в БД.
+        operationId: getToys
+        tags:
+          - Toy
+        responses:
+          '200':
+            "description": Список игрушек
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Toys"
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+      post:
+        summary: Метод добавления новой игрушки в каталог
+        description: Метод предназначен для сохранения в БД данных по новой игрушке.
+        operationId: createToy
+        tags:
+          - Toy
+        requestBody:
+          required: true
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Toy"
+        responses:
+          '200':
+            "description": Подтверждение успешного сохранения
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Toy"
+          '400':
+            "description": Некорректные входные данные. Возвращает список атрибутов с ошибками
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: string
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+    /toys/{id}:
+      get:
+        summary: Метод получения игрушки по идентификатору
+        operationId: getToyById
+        tags:
+          - Toy
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: Идентификатор игрушки
+            schema:
+              type: string
+        responses:
+          '200':
+            "description": Игрушка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Toy"
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+      put:
+        summary: Метод обновления игрушки в каталоге
+        description: Метод предназначен для обновления в БД данных по имеющейся игрушке.
+        operationId: updateToy
+        tags:
+          - Toy
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: Идентификатор игрушки
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            'application/json':
+              schema:
+                $ref: "#/components/schemas/Toy"
+        responses:
+          '200':
+            "description": Подтверждение успешного обновления
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Toy"
+          '400':
+            "description": Некорректные входные данные. Возвращает список атрибутов с ошибками
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: string
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+      delete:
+        summary: Метод удаления игрушки по идентификатору
+        operationId: deleteToyById
+        tags:
+          - Toy
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: Идентификатор игрушки
+            schema:
+              type: string
+        responses:
+          '200':
+            "description": Успешное удаление
+            content:
+              'application/json': {}
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+    /toys/status/{status}:
+      get:
+        summary: Метод получения игрушек по состоянию
+        operationId: getToyByStatus
+        tags:
+          - Toy
+        parameters:
+          - name: status
+            in: path
+            required: true
+            description: Статус (состояние) игрушки
+            schema:
+              type: string
+              enum: 
+                - new
+                - used
+                - broken
+        responses:
+          '200':
+            "description": Игрушка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Toy"
+          default:
+            description: Любая неожиданная ошибка
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Error"
+
+                  
+  components:
+    schemas:
+      Toy:
+        type: object
+        required:
+          - name
+          - status
+        properties:
+          toy_id:
+            type: string
+            example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
+          name:
+            description: Название игрушки
+            type: string
+            example: Train
+          status:
+            description: Статус (состояние) игрушки
+            type: string
+            enum:
+              - new
+              - used
+              - broken
+            example: new
+          note:
+            description: Описание, пометки
+            type: string
+            example: Found on a street
+          created_at:
+            description: Дата и время сохранения игрушки в каталоге
+            type: string
+            example: 2022-07-01T15:00:00+01
+      Toys:
+        type: array
+        items:
+          $ref: "#/components/schemas/Toy"
+      Error:
+        type: object
+        required:
+          - code
+          - message
+        properties:
+          code:
+            type: integer
+            format: int32
+          message:
+            type: string
+contentType: yaml
