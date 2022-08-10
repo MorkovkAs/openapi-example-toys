@@ -17,6 +17,7 @@ contents: >-
     - url: http://localhost:8080/api/v1/
       description: Dev server  
 
+
     
   paths:
     /toys:
@@ -191,6 +192,7 @@ contents: >-
               application/json:
                 schema:
                   $ref: "#/components/schemas/Error"
+
 
                   
   components:
