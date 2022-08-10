@@ -1,7 +1,7 @@
 _id: spc_b48e4d826bc849f5a3cf324b45d147d0
 type: ApiSpec
 parentId: wrk_c545c7b54efc4918b5101193d6a961a6
-modified: 1659451580138
+modified: 1660139017712
 created: 1656265914508
 fileName: toys.yaml
 contents: >-
@@ -12,7 +12,7 @@ contents: >-
     license:
       name: Apache 2.0
       url: https://www.apache.org/licenses/LICENSE-2.0.html
-    version: 0.0.1
+    version: 0.0.2
   servers:
     - url: http://localhost:8080/api/v1/
       description: Dev server  
