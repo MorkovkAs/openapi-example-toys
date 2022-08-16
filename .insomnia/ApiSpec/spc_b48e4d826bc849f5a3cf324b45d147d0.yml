@@ -1,7 +1,7 @@
 _id: spc_b48e4d826bc849f5a3cf324b45d147d0
 type: ApiSpec
 parentId: wrk_c545c7b54efc4918b5101193d6a961a6
-modified: 1660139017712
+modified: 1660645603012
 created: 1656265914508
 fileName: toys.yaml
 contents: >-
@@ -33,9 +33,11 @@ contents: >-
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/Toys"
-          default:
-            description: Любая неожиданная ошибка
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Toy"
+          '501':
+            description: Метод не реализован в коде
             content:
               application/json:
                 schema:
@@ -67,12 +69,6 @@ contents: >-
                   type: array
                   items:
                     type: string
-          default:
-            description: Любая неожиданная ошибка
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
     /toys/{id}:
       get:
         summary: Метод получения игрушки по идентификатору
@@ -185,13 +181,9 @@ contents: >-
             content:
               application/json:
                 schema:
-                  $ref: "#/components/schemas/Toy"
-          default:
-            description: Любая неожиданная ошибка
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Toy"
 
 
                   
@@ -226,10 +218,6 @@ contents: >-
             description: Дата и время сохранения игрушки в каталоге
             type: string
             example: 2022-07-01T15:00:00+01
-      Toys:
-        type: array
-        items:
-          $ref: "#/components/schemas/Toy"
       Error:
         type: object
         required:
