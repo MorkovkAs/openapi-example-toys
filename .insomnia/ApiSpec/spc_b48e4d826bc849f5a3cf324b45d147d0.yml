@@ -1,7 +1,7 @@
 _id: spc_b48e4d826bc849f5a3cf324b45d147d0
 type: ApiSpec
 parentId: wrk_c545c7b54efc4918b5101193d6a961a6
-modified: 1660645603012
+modified: 1661861299394
 created: 1656265914508
 fileName: toys.yaml
 contents: >-
@@ -12,10 +12,11 @@ contents: >-
     license:
       name: Apache 2.0
       url: https://www.apache.org/licenses/LICENSE-2.0.html
-    version: 0.0.2
+    version: 0.0.3
   servers:
     - url: http://localhost:8080/api/v1/
       description: Dev server  
+
 
 
     
@@ -31,17 +32,11 @@ contents: >-
           '200':
             "description": Список игрушек
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   type: array
                   items:
                     $ref: "#/components/schemas/Toy"
-          '501':
-            description: Метод не реализован в коде
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
       post:
         summary: Метод добавления новой игрушки в каталог
         description: Метод предназначен для сохранения в БД данных по новой игрушке.
@@ -51,20 +46,20 @@ contents: >-
         requestBody:
           required: true
           content:
-            'application/json':
+            application/json;charset=UTF-8:
               schema:
                 $ref: "#/components/schemas/Toy"
         responses:
           '200':
             "description": Подтверждение успешного сохранения
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
           '400':
             "description": Некорректные входные данные. Возвращает список атрибутов с ошибками
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   type: array
                   items:
@@ -80,19 +75,20 @@ contents: >-
             in: path
             required: true
             description: Идентификатор игрушки
+            example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
         responses:
           '200':
             "description": Игрушка
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
           default:
             description: Любая неожиданная ошибка
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Error"
       put:
@@ -106,19 +102,20 @@ contents: >-
             in: path
             required: true
             description: Идентификатор игрушки
+            example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
         requestBody:
           required: true
           content:
-            'application/json':
+            application/json;charset=UTF-8:
               schema:
                 $ref: "#/components/schemas/Toy"
         responses:
           '200':
             "description": Подтверждение успешного обновления
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
           '400':
@@ -145,19 +142,13 @@ contents: >-
             in: path
             required: true
             description: Идентификатор игрушки
+            example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
         responses:
           '200':
             "description": Успешное удаление
-            content:
-              'application/json': {}
-          default:
-            description: Любая неожиданная ошибка
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/Error"
+            content: {}
     /toys/status/{status}:
       get:
         summary: Метод получения игрушек по состоянию
@@ -179,11 +170,12 @@ contents: >-
           '200':
             "description": Игрушка
             content:
-              application/json:
+              application/json;charset=UTF-8:
                 schema:
                   type: array
                   items:
                     $ref: "#/components/schemas/Toy"
+
 
 
                   

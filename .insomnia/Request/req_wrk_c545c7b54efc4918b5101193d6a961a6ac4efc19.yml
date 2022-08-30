@@ -1,7 +1,7 @@
 _id: req_wrk_c545c7b54efc4918b5101193d6a961a6ac4efc19
 type: Request
 parentId: wrk_c545c7b54efc4918b5101193d6a961a6
-modified: 1659451397099
+modified: 1661168441433
 created: 1659451397099
 url: "{{ base_url }}/toys"
 name: Метод добавления новой игрушки в каталог
@@ -21,6 +21,7 @@ parameters: []
 headers:
   - name: Content-Type
     value: application/json
+    id: pair_9085b883dd7a478781f6b57ee957270d
 authentication: {}
 metaSortKey: -1659451397099
 isPrivate: false
