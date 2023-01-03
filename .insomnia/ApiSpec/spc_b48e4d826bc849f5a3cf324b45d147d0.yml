@@ -1,7 +1,7 @@
 _id: spc_b48e4d826bc849f5a3cf324b45d147d0
 type: ApiSpec
 parentId: wrk_c545c7b54efc4918b5101193d6a961a6
-modified: 1661861299394
+modified: 1672742815029
 created: 1656265914508
 fileName: toys.yaml
 contents: >-
@@ -9,14 +9,23 @@ contents: >-
 
   info:
     title: OpenAPI спецификация каталога детских игрушек
+    description: Спецификация для проведения обучения по проектированию и тестирования API
     license:
       name: Apache 2.0
       url: https://www.apache.org/licenses/LICENSE-2.0.html
-    version: 0.0.3
+    version: 0.1.0
+    contact:
+      name: Anton Klimakov
+      url: https://github.com/MorkovkAs/openapi-example-toys
+      email: avklimakov@gmail.com
   servers:
-    - url: http://localhost:8080/api/v1/
+    - url: http://localhost:8080/api/v1
       description: Dev server  
 
+
+  tags:
+    - name: Toy
+      description: "All methods about Toys"
 
 
     
@@ -30,7 +39,7 @@ contents: >-
           - Toy
         responses:
           '200':
-            "description": Список игрушек
+            description: Список игрушек
             content:
               application/json;charset=UTF-8:
                 schema:
@@ -51,13 +60,13 @@ contents: >-
                 $ref: "#/components/schemas/Toy"
         responses:
           '200':
-            "description": Подтверждение успешного сохранения
+            description: Подтверждение успешного сохранения
             content:
               application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
           '400':
-            "description": Некорректные входные данные. Возвращает список атрибутов с ошибками
+            description: Некорректные входные данные. Возвращает список атрибутов с ошибками
             content:
               application/json;charset=UTF-8:
                 schema:
@@ -67,6 +76,7 @@ contents: >-
     /toys/{id}:
       get:
         summary: Метод получения игрушки по идентификатору
+        description: Метод предназначен для получения из БД данных по игрушке.
         operationId: getToyById
         tags:
           - Toy
@@ -78,19 +88,14 @@ contents: >-
             example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
+              format: uuid
         responses:
           '200':
-            "description": Игрушка
+            description: Игрушка
             content:
               application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
-          default:
-            description: Любая неожиданная ошибка
-            content:
-              application/json;charset=UTF-8:
-                schema:
-                  $ref: "#/components/schemas/Error"
       put:
         summary: Метод обновления игрушки в каталоге
         description: Метод предназначен для обновления в БД данных по имеющейся игрушке.
@@ -105,6 +110,7 @@ contents: >-
             example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
+              format: uuid
         requestBody:
           required: true
           content:
@@ -113,27 +119,28 @@ contents: >-
                 $ref: "#/components/schemas/Toy"
         responses:
           '200':
-            "description": Подтверждение успешного обновления
+            description: Подтверждение успешного обновления
             content:
               application/json;charset=UTF-8:
                 schema:
                   $ref: "#/components/schemas/Toy"
           '400':
-            "description": Некорректные входные данные. Возвращает список атрибутов с ошибками
+            description: Некорректные входные данные. Возвращает список атрибутов с ошибками
             content:
               application/json:
                 schema:
                   type: array
                   items:
                     type: string
-          default:
-            description: Любая неожиданная ошибка
+          '5XX':
+            description: Любая неожиданная ошибка сервера
             content:
               application/json:
                 schema:
                   $ref: "#/components/schemas/Error"
       delete:
         summary: Метод удаления игрушки по идентификатору
+        description: Метод предназначен для удаления в БД данных по игрушке.
         operationId: deleteToyById
         tags:
           - Toy
@@ -145,13 +152,15 @@ contents: >-
             example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
             schema:
               type: string
+              format: uuid
         responses:
           '200':
-            "description": Успешное удаление
+            description: Успешное удаление
             content: {}
     /toys/status/{status}:
       get:
-        summary: Метод получения игрушек по состоянию
+        summary: Метод получения игрушек по состоянию      
+        description: Метод предназначен для получения игрушек из БД по их состоянию.
         operationId: getToyByStatus
         tags:
           - Toy
@@ -168,13 +177,14 @@ contents: >-
                 - broken
         responses:
           '200':
-            "description": Игрушка
+            description: Игрушка
             content:
               application/json;charset=UTF-8:
                 schema:
                   type: array
                   items:
                     $ref: "#/components/schemas/Toy"
+
 
 
 
@@ -189,6 +199,7 @@ contents: >-
         properties:
           toy_id:
             type: string
+            format: uuid
             example: 42abcd2b-8b9c-4af9-88f7-0bc180cf74b4
           name:
             description: Название игрушки
@@ -213,12 +224,53 @@ contents: >-
       Error:
         type: object
         required:
-          - code
-          - message
+          - title
+          - detail
+          - request
+          - time
+          - errorTraceId
         properties:
-          code:
+          title:
+            description: Краткое описание проблемы, понятное человеку
+            type: string
+            example: Entity not found
+          detail:
+            description: Описание конкретно возникшей ошибки, понятное человеку
+            type: string
+            example: Entity [Post] with id = [123456] not found. You MUST use POST to add entity instead of PUT
+          request:
+            description: Метод и URL запроса
+            type: string
+            example: PUT /posts/123456
+          time:
+            description: Время возникновения ошибки с точностью до миллисекунд
+            type: string
+            example: 1996-12-19T16:39:57.87-08:00
+          errorTraceId:
+            description: Идентификатор конкретного возникновения ошибки
+            type: string
+            example: ce1ff211-b5dd-4397-b8a8-3f640705efa2
+            
+          errorCode:
+            description: Код ошибки по бизнес логике приложения
             type: integer
             format: int32
-          message:
+            example: 57
+            
+          exception:
+            description: Тип ошибки
             type: string
+            example: NullPointerException
+          stacktrace:
+            description: Stacktrace в случае возникновения на сервере исключения
+            type: string
+            example: ...
+          causeException:
+            description: Тип первоначального исключения
+            type: string
+            example: ...
+          causeStacketrace:
+            description: Stacktrace первоначального исключения
+            type: string
+            example: ...
 contentType: yaml
